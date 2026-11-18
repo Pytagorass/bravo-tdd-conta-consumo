@@ -15,4 +15,6 @@ public class ItemPedido {
     public BigDecimal calcularSubtotal() {
         return precoUnitario.multiply(BigDecimal.valueOf(quantidade));
     }
+        public void alterarQuantidade(int novaQuantidade) {
+    }
 }

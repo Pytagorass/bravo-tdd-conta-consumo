@@ -15,4 +15,12 @@ class ItemPedidoTest {
 
         assertEquals(new BigDecimal("16.00"), subtotal);
     }
+    @Test
+    void deveRecalcularSubtotalQuandoQuantidadeForAlterada() {
+        ItemPedido item = new ItemPedido(new BigDecimal("8.00"), 2);
+
+        item.alterarQuantidade(3);
+
+        assertEquals(new BigDecimal("24.00"), item.calcularSubtotal());
+    }
 }
