@@ -54,4 +54,31 @@ class ContaConsumoTest {
 
         assertEquals(new BigDecimal("16.00"), conta.calcularTotal());
     }
+
+    @Test
+    void deveReduzirSaldoQuandoRegistrarPagamentoParcial() {
+        ContaConsumo conta = criarContaComConsumo();
+
+        conta.registrarPagamento(new BigDecimal("10.00"));
+
+        assertEquals(new BigDecimal("6.00"), conta.calcularSaldo());
+        assertEquals(new BigDecimal("16.00"), conta.calcularTotal());
+    }
+
+    @Test
+    void deveZerarSaldoQuandoRegistrarPagamentoIntegral() {
+        ContaConsumo conta = criarContaComConsumo();
+
+        conta.registrarPagamento(new BigDecimal("16.00"));
+
+        assertEquals(new BigDecimal("0.00"), conta.calcularSaldo());
+    }
+
+    private ContaConsumo criarContaComConsumo() {
+        ContaConsumo conta = new ContaConsumo("RES-001");
+        Pedido pedido = criarPedidoComItens();
+        pedido.confirmar();
+        conta.registrarPedido(pedido);
+        return conta;
+    }
 }

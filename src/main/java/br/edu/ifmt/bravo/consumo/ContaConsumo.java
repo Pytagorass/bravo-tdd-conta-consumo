@@ -8,6 +8,7 @@ public class ContaConsumo {
 
     private final String idReserva;
     private final Map<String, Pedido> pedidos = new HashMap<>();
+    private BigDecimal totalPago = BigDecimal.ZERO;
 
     public ContaConsumo(String idReserva) {
         this.idReserva = idReserva;
@@ -34,5 +35,12 @@ public class ContaConsumo {
         }
 
     return total;
+    }
+
+    public void registrarPagamento(BigDecimal valor) {
+    }
+
+    public BigDecimal calcularSaldo() {
+        return calcularTotal();
     }
 }
