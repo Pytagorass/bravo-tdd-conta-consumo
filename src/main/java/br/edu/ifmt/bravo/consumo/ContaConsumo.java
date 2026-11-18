@@ -38,9 +38,11 @@ public class ContaConsumo {
     }
 
     public void registrarPagamento(BigDecimal valor) {
+        totalPago = totalPago.add(valor);
     }
 
     public BigDecimal calcularSaldo() {
-        return calcularTotal();
+        return calcularTotal().subtract(totalPago);
     }
+
 }

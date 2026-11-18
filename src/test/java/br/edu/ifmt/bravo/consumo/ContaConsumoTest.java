@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class ContaConsumoTest {
 
@@ -80,5 +82,16 @@ class ContaConsumoTest {
         pedido.confirmar();
         conta.registrarPedido(pedido);
         return conta;
+    }
+        @ParameterizedTest
+    @ValueSource(strings = {"0.00", "-1.00", "6.01"})
+    void devePreservarSaldoQuandoPagamentoForInvalido(String valor) {
+        ContaConsumo conta = criarContaComConsumo();
+        conta.registrarPagamento(new BigDecimal("10.00"));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> conta.registrarPagamento(new BigDecimal(valor)));
+
+        assertEquals(new BigDecimal("6.00"), conta.calcularSaldo());
     }
 }
