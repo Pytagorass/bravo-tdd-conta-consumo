@@ -108,5 +108,44 @@ class PedidoTest {
 
         assertThrows(IllegalStateException.class, pedido::confirmar);
     }
+
+    @Test
+    void deveRejeitarInclusaoQuandoPedidoEstiverConfirmado() {
+        Pedido pedido = criarPedidoConfirmado();
+        Produto agua = new Produto("Água", new BigDecimal("5.00"));
+
+        assertThrows(IllegalStateException.class,
+                () -> pedido.adicionarItem("ITEM-002", agua, 1));
+
+        assertEquals(new BigDecimal("16.00"), pedido.calcularTotal());
+    }
+
+    @Test
+    void deveRejeitarRemocaoQuandoPedidoEstiverConfirmado() {
+        Pedido pedido = criarPedidoConfirmado();
+
+        assertThrows(IllegalStateException.class,
+                () -> pedido.removerItem("ITEM-001"));
+
+        assertEquals(new BigDecimal("16.00"), pedido.calcularTotal());
+    }
+
+    @Test
+    void deveRejeitarAlteracaoDeQuantidadeQuandoPedidoEstiverConfirmado() {
+        Pedido pedido = criarPedidoConfirmado();
+
+        assertThrows(IllegalStateException.class,
+                () -> pedido.alterarQuantidadeDoItem("ITEM-001", 3));
+
+        assertEquals(new BigDecimal("16.00"), pedido.calcularTotal());
+    }
+
+    private Pedido criarPedidoConfirmado() {
+        Pedido pedido = new Pedido("PED-001");
+        Produto suco = new Produto("Suco", new BigDecimal("8.00"));
+        pedido.adicionarItem("ITEM-001", suco, 2);
+        pedido.confirmar();
+        return pedido;
+    }
     
 }
