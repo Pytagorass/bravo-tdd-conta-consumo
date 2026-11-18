@@ -30,9 +30,12 @@ public class Pedido {
         return total;
     }
 
-        public void removerItem(String idItem) {
+    public void removerItem(String idItem) {
         if (itens.remove(idItem) == null) {
             throw new IllegalArgumentException("Item não encontrado no pedido.");
         }
+    }
+
+    public void alterarQuantidadeDoItem(String idItem, int quantidade) {
     }
 }

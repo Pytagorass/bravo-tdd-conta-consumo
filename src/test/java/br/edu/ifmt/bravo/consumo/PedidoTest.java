@@ -57,4 +57,36 @@ class PedidoTest {
 
         assertEquals(new BigDecimal("16.00"), pedido.calcularTotal());
     }
+
+    @Test
+    void deveRecalcularTotalComPrecoOriginalQuandoAlterarQuantidadeDoItem() {
+        Pedido pedido = new Pedido("PED-001");
+        Produto suco = new Produto("Suco", new BigDecimal("8.00"));
+        pedido.adicionarItem("ITEM-001", suco, 2);
+        suco.alterarPreco(new BigDecimal("10.00"));
+
+        pedido.alterarQuantidadeDoItem("ITEM-001", 3);
+
+        assertEquals(new BigDecimal("24.00"), pedido.calcularTotal());
+    }
+
+    @Test
+    void deveRejeitarAlteracaoDeQuantidadeQuandoItemNaoExistir() {
+        Pedido pedido = new Pedido("PED-001");
+
+        assertThrows(IllegalArgumentException.class,
+                () -> pedido.alterarQuantidadeDoItem("ITEM-999", 3));
+    }
+
+    @Test
+    void devePreservarTotalQuandoNovaQuantidadeForZero() {
+        Pedido pedido = new Pedido("PED-001");
+        Produto suco = new Produto("Suco", new BigDecimal("8.00"));
+        pedido.adicionarItem("ITEM-001", suco, 2);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> pedido.alterarQuantidadeDoItem("ITEM-001", 0));
+
+        assertEquals(new BigDecimal("16.00"), pedido.calcularTotal());
+    }
 }
