@@ -19,7 +19,9 @@ public class Pedido {
         }
 
         ItemPedido item = new ItemPedido(produto.getPreco(), quantidade);
-        itens.put(idItem, item);
+            if (itens.putIfAbsent(idItem, item) != null) {
+                throw new IllegalArgumentException("Já existe um item com esse identificador.");
+        }
     }
 
     public BigDecimal calcularTotal() {
