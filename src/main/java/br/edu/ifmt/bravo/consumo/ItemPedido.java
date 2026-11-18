@@ -8,9 +8,13 @@ public class ItemPedido {
     private int quantidade;
 
     public ItemPedido(BigDecimal precoUnitario, int quantidade) {
-        this.precoUnitario = precoUnitario;
-        this.quantidade = quantidade;
+    if (quantidade < 1) {
+        throw new IllegalArgumentException("A quantidade deve ser maior que zero.");
     }
+
+    this.precoUnitario = precoUnitario;
+    this.quantidade = quantidade;
+}
 
     public BigDecimal calcularSubtotal() {
         return precoUnitario.multiply(BigDecimal.valueOf(quantidade));
@@ -21,4 +25,5 @@ public class ItemPedido {
         }
         this.quantidade = novaQuantidade;
     }
+    
 }
