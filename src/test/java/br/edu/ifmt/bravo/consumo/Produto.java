@@ -12,4 +12,8 @@ public class Produto {
         throw new IllegalArgumentException("O preço não pode ser negativo.");
     }
     }
+
+    public BigDecimal getPreco() {
+    return null;
+}
 }
