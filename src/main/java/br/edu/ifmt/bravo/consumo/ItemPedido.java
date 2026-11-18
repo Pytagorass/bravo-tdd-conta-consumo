@@ -8,22 +8,23 @@ public class ItemPedido {
     private int quantidade;
 
     public ItemPedido(BigDecimal precoUnitario, int quantidade) {
-    if (quantidade < 1) {
-        throw new IllegalArgumentException("A quantidade deve ser maior que zero.");
+        validarQuantidade(quantidade);
+        this.precoUnitario = precoUnitario;
+        this.quantidade = quantidade;
     }
 
-    this.precoUnitario = precoUnitario;
-    this.quantidade = quantidade;
-}
+    private static void validarQuantidade(int quantidade) {
+        if (quantidade < 1) {
+            throw new IllegalArgumentException("A quantidade deve ser maior que zero.");
+        }
+    }
+    public void alterarQuantidade(int novaQuantidade) {
+        validarQuantidade(novaQuantidade);
+        this.quantidade = novaQuantidade;
+    }
 
     public BigDecimal calcularSubtotal() {
         return precoUnitario.multiply(BigDecimal.valueOf(quantidade));
-    }
-    public void alterarQuantidade(int novaQuantidade) {
-        if (novaQuantidade < 1) {
-            throw new IllegalArgumentException("A quantidade deve ser maior que zero.");
-        }
-        this.quantidade = novaQuantidade;
     }
     
 }
