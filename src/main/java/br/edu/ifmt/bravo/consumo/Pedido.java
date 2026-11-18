@@ -8,6 +8,9 @@ public class Pedido {
     }
 
     public BigDecimal calcularTotal() {
-        return null;
+        return BigDecimal.ZERO;
+    }
+
+    public void adicionarItem(String idItem, Produto produto, int quantidade) {
     }
 }
