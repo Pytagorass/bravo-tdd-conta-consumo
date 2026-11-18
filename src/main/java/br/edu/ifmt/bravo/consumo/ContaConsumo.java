@@ -38,6 +38,14 @@ public class ContaConsumo {
     }
 
     public void registrarPagamento(BigDecimal valor) {
+        if (valor.signum() <= 0) {
+            throw new IllegalArgumentException("O pagamento deve ser maior que zero.");
+        }
+
+        if (valor.compareTo(calcularSaldo()) > 0) {
+            throw new IllegalArgumentException("O pagamento não pode exceder o saldo devido.");
+        }
+
         totalPago = totalPago.add(valor);
     }
 

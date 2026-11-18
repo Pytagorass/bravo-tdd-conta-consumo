@@ -40,7 +40,7 @@ class ContaConsumoTest {
         return pedido;
     }
 
-    
+
     @Test
     void devePreservarTotalQuandoRegistrarPedidoComIdentificadorDuplicado() {
         ContaConsumo conta = new ContaConsumo("RES-001");
@@ -84,7 +84,7 @@ class ContaConsumoTest {
         conta.registrarPedido(pedido);
         return conta;
     }
-        @ParameterizedTest
+    @ParameterizedTest
     @ValueSource(strings = {"0.00", "-1.00", "6.01"})
     void devePreservarSaldoQuandoPagamentoForInvalido(String valor) {
         ContaConsumo conta = criarContaComConsumo();
