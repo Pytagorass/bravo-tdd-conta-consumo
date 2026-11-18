@@ -21,4 +21,11 @@ public class Produto {
     public BigDecimal getPreco() {
         return preco;
     }
+
+    public boolean isAtivo() {
+        return true;
+    }
+
+    public void desativar() {
+    }
 }

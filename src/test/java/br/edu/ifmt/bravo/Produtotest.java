@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import br.edu.ifmt.bravo.consumo.Produto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 
 class ProdutoTest {
@@ -27,5 +29,14 @@ class ProdutoTest {
         produto.alterarPreco(new BigDecimal("10.00"));
 
         assertEquals(new BigDecimal("10.00"), produto.getPreco());
-}
+    }
+    @Test
+    void deveFicarInativoQuandoForDesativado() {
+        Produto produto = new Produto("Suco", new BigDecimal("8.00"));
+        assertTrue(produto.isAtivo());
+
+        produto.desativar();
+
+        assertFalse(produto.isAtivo());
+    }
 }
