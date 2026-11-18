@@ -31,4 +31,6 @@ public class Produto {
     public void desativar() {
         ativo = false;
     }
+        public void ativar() {
+    }
 }

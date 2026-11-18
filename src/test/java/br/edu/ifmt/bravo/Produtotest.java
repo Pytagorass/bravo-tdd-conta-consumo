@@ -39,4 +39,15 @@ class ProdutoTest {
 
         assertFalse(produto.isAtivo());
     }
+
+        @Test
+    void deveVoltarAFicarAtivoQuandoForReativado() {
+        Produto produto = new Produto("Suco", new BigDecimal("8.00"));
+        produto.desativar();
+        assertFalse(produto.isAtivo());
+
+        produto.ativar();
+
+        assertTrue(produto.isAtivo());
+    }
 }
