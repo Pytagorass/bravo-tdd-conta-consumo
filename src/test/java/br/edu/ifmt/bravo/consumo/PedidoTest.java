@@ -89,4 +89,5 @@ class PedidoTest {
 
         assertEquals(new BigDecimal("16.00"), pedido.calcularTotal());
     }
+    
 }

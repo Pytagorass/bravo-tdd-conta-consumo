@@ -36,13 +36,16 @@ public class Pedido {
         }
     }
 
+    // public void alterarQuantidadeDoItem(String idItem, int quantidade) {
+    //     ItemPedido item = itens.get(idItem);
+
+    //     if (item == null) {
+    //         throw new IllegalArgumentException("Item não encontrado no pedido.");
+    //     }
+
+    //     item.alterarQuantidade(quantidade);
+    // }
+
     public void alterarQuantidadeDoItem(String idItem, int quantidade) {
-        ItemPedido item = itens.get(idItem);
-
-        if (item == null) {
-            throw new IllegalArgumentException("Item não encontrado no pedido.");
-        }
-
-        item.alterarQuantidade(quantidade);
     }
 }
