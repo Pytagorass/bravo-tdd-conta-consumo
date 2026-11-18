@@ -29,4 +29,7 @@ public class Pedido {
 
         return total;
     }
+
+        public void removerItem(String idItem) {
+    }
 }

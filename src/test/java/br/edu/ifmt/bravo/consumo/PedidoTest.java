@@ -35,4 +35,26 @@ class PedidoTest {
 
         assertEquals(BigDecimal.ZERO, pedido.calcularTotal());
     }
+
+        @Test
+    void deveRecalcularTotalQuandoRemoverItemExistente() {
+        Pedido pedido = new Pedido("PED-001");
+        pedido.adicionarItem("ITEM-001", new Produto("Suco", new BigDecimal("8.00")), 2);
+        pedido.adicionarItem("ITEM-002", new Produto("Água", new BigDecimal("5.00")), 1);
+
+        pedido.removerItem("ITEM-001");
+
+        assertEquals(new BigDecimal("5.00"), pedido.calcularTotal());
+    }
+
+    @Test
+    void deveRejeitarRemocaoQuandoItemNaoExistir() {
+        Pedido pedido = new Pedido("PED-001");
+        pedido.adicionarItem("ITEM-001", new Produto("Suco", new BigDecimal("8.00")), 2);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> pedido.removerItem("ITEM-999"));
+
+        assertEquals(new BigDecimal("16.00"), pedido.calcularTotal());
+    }
 }
