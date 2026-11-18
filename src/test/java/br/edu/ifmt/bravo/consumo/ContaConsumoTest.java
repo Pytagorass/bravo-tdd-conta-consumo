@@ -40,6 +40,7 @@ class ContaConsumoTest {
         return pedido;
     }
 
+    
     @Test
     void devePreservarTotalQuandoRegistrarPedidoComIdentificadorDuplicado() {
         ContaConsumo conta = new ContaConsumo("RES-001");
