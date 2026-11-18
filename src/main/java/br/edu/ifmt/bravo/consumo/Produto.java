@@ -6,6 +6,8 @@ public class Produto {
 
     private BigDecimal preco;
 
+    private boolean ativo = true;
+
     public Produto(String nome, BigDecimal preco) {
         this.preco = preco;
     }
@@ -23,9 +25,10 @@ public class Produto {
     }
 
     public boolean isAtivo() {
-        return true;
+        return ativo;
     }
 
     public void desativar() {
+        ativo = false;
     }
 }
