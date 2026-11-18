@@ -12,6 +12,10 @@ public class Pedido {
     }
 
     public void adicionarItem(String idItem, Produto produto, int quantidade) {
+        if (!produto.isAtivo()) {
+            throw new IllegalArgumentException("O produto está desativado.");
+        }
+
         ItemPedido item = new ItemPedido(produto.getPreco(), quantidade);
         itens.put(idItem, item);
     }
