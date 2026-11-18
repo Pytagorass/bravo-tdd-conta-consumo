@@ -1,11 +1,9 @@
-package br.edu.ifmt.bravo;
+package br.edu.ifmt.bravo.consumo;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
-
-import br.edu.ifmt.bravo.consumo.Produto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
