@@ -8,8 +8,14 @@ public class Pedido {
 
     private final Map<String, ItemPedido> itens = new HashMap<>();
     private boolean confirmado;
+    private final String id;
 
     public Pedido(String id) {
+        this.id = id;
+    }
+    
+    public String getId() {
+        return id;
     }
 
     public void adicionarItem(String idItem, Produto produto, int quantidade) {
