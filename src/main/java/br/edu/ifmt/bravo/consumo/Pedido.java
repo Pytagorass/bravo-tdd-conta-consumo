@@ -7,6 +7,7 @@ import java.util.Map;
 public class Pedido {
 
     private final Map<String, ItemPedido> itens = new HashMap<>();
+    private boolean confirmado;
 
     public Pedido(String id) {
     }
@@ -36,16 +37,25 @@ public class Pedido {
         }
     }
 
-    // public void alterarQuantidadeDoItem(String idItem, int quantidade) {
-    //     ItemPedido item = itens.get(idItem);
-
-    //     if (item == null) {
-    //         throw new IllegalArgumentException("Item não encontrado no pedido.");
-    //     }
-
-    //     item.alterarQuantidade(quantidade);
-    // }
-
     public void alterarQuantidadeDoItem(String idItem, int quantidade) {
+        ItemPedido item = itens.get(idItem);
+
+        if (item == null) {
+            throw new IllegalArgumentException("Item não encontrado no pedido.");
+        }
+
+        item.alterarQuantidade(quantidade);
+    }
+
+    public void confirmar() {
+        if (itens.isEmpty()) {
+            throw new IllegalStateException("O pedido precisa ter pelo menos um item.");
+        }
+
+        confirmado = true;
+    }
+
+    public boolean isConfirmado() {
+        return confirmado;
     }
 }

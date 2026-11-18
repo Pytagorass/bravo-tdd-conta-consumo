@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 class PedidoTest {
@@ -88,6 +89,24 @@ class PedidoTest {
                 () -> pedido.alterarQuantidadeDoItem("ITEM-001", 0));
 
         assertEquals(new BigDecimal("16.00"), pedido.calcularTotal());
+    }
+
+    @Test
+    void deveConfirmarPedidoQuandoHouverItens() {
+        Pedido pedido = new Pedido("PED-001");
+        Produto suco = new Produto("Suco", new BigDecimal("8.00"));
+        pedido.adicionarItem("ITEM-001", suco, 2);
+
+        pedido.confirmar();
+
+        assertTrue(pedido.isConfirmado());
+    }
+
+    @Test
+    void deveRejeitarConfirmacaoQuandoPedidoEstiverVazio() {
+        Pedido pedido = new Pedido("PED-001");
+
+        assertThrows(IllegalStateException.class, pedido::confirmar);
     }
     
 }
