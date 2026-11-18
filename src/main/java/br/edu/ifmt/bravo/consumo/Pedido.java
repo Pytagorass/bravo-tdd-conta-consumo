@@ -31,5 +31,8 @@ public class Pedido {
     }
 
         public void removerItem(String idItem) {
+        if (itens.remove(idItem) == null) {
+            throw new IllegalArgumentException("Item não encontrado no pedido.");
+        }
     }
 }
