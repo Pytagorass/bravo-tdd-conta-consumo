@@ -9,6 +9,7 @@ public class ContaConsumo {
     private final String idReserva;
     private final Map<String, Pedido> pedidos = new HashMap<>();
     private BigDecimal totalPago = BigDecimal.ZERO;
+    private boolean fechada;
 
     public ContaConsumo(String idReserva) {
         this.idReserva = idReserva;
@@ -18,6 +19,7 @@ public class ContaConsumo {
         return idReserva;
     }
     public void registrarPedido(Pedido pedido) {
+        validarContaAberta();
         if (!pedido.isConfirmado()) {
             throw new IllegalStateException("O pedido precisa estar confirmado.");
         }
@@ -38,6 +40,7 @@ public class ContaConsumo {
     }
 
     public void registrarPagamento(BigDecimal valor) {
+        validarContaAberta();
         if (valor.signum() <= 0) {
             throw new IllegalArgumentException("O pagamento deve ser maior que zero.");
         }
@@ -54,10 +57,23 @@ public class ContaConsumo {
     }
 
     public void fechar() {
+        validarContaAberta();
+
+        if (calcularSaldo().signum() != 0) {
+            throw new IllegalStateException("A conta tem saldo pendente.");
+        }
+
+        fechada = true;
     }
 
     public boolean isFechada() {
-        return false;
+        return fechada;
+    }
+
+    private void validarContaAberta() {
+        if (fechada) {
+            throw new IllegalStateException("A conta está fechada.");
+        }
     }
 
 }
