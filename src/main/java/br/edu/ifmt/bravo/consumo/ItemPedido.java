@@ -16,6 +16,9 @@ public class ItemPedido {
         return precoUnitario.multiply(BigDecimal.valueOf(quantidade));
     }
     public void alterarQuantidade(int novaQuantidade) {
+        if (novaQuantidade < 1) {
+            throw new IllegalArgumentException("A quantidade deve ser maior que zero.");
+        }
         this.quantidade = novaQuantidade;
     }
 }
