@@ -147,5 +147,17 @@ class PedidoTest {
         pedido.confirmar();
         return pedido;
     }
+
+        @Test
+    void devePreservarItemOriginalQuandoIdentificadorForDuplicado() {
+        Pedido pedido = new Pedido("PED-001");
+        Produto suco = new Produto("Suco", new BigDecimal("8.00"));
+        pedido.adicionarItem("ITEM-001", suco, 2);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> pedido.adicionarItem("ITEM-001", suco, 3));
+
+        assertEquals(new BigDecimal("16.00"), pedido.calcularTotal());
+    }
     
 }
