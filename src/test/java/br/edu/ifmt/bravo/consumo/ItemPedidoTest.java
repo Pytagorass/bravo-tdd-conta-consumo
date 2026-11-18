@@ -33,4 +33,9 @@ class ItemPedidoTest {
 
         assertEquals(new BigDecimal("16.00"), item.calcularSubtotal());
     }
+        @Test
+    void deveRejeitarCriacaoQuandoQuantidadeInicialForZero() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new ItemPedido(new BigDecimal("8.00"), 0));
+    }
 }
