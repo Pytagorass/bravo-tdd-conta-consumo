@@ -3,6 +3,7 @@ package br.edu.ifmt.bravo.consumo;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 class PedidoTest {
@@ -13,7 +14,7 @@ class PedidoTest {
 
         assertEquals(BigDecimal.ZERO, pedido.calcularTotal());
     }
-        @Test
+    @Test
     void deveIncluirSubtotalNoTotalQuandoAdicionarItem() {
         Pedido pedido = new Pedido("PED-001");
         Produto produto = new Produto("Suco", new BigDecimal("8.00"));
@@ -21,5 +22,17 @@ class PedidoTest {
         pedido.adicionarItem("ITEM-001", produto, 2);
 
         assertEquals(new BigDecimal("16.00"), pedido.calcularTotal());
+    }
+
+    @Test
+    void deveRejeitarInclusaoQuandoProdutoEstiverDesativado() {
+        Pedido pedido = new Pedido("PED-001");
+        Produto produto = new Produto("Suco", new BigDecimal("8.00"));
+        produto.desativar();
+
+        assertThrows(IllegalArgumentException.class,
+                () -> pedido.adicionarItem("ITEM-001", produto, 2));
+
+        assertEquals(BigDecimal.ZERO, pedido.calcularTotal());
     }
 }
