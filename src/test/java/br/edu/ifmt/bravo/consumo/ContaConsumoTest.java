@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -94,5 +96,52 @@ class ContaConsumoTest {
                 () -> conta.registrarPagamento(new BigDecimal(valor)));
 
         assertEquals(new BigDecimal("6.00"), conta.calcularSaldo());
+    }
+
+    @Test
+    void deveFecharContaQuandoSaldoEstiverZerado() {
+        ContaConsumo conta = criarContaQuitada();
+
+        conta.fechar();
+
+        assertTrue(conta.isFechada());
+    }
+
+    @Test
+    void deveRejeitarFechamentoQuandoHouverSaldoPendente() {
+        ContaConsumo conta = criarContaComConsumo();
+        conta.registrarPagamento(new BigDecimal("10.00"));
+
+        assertThrows(IllegalStateException.class, conta::fechar);
+    }
+
+    @Test
+    void deveRejeitarNovoPedidoQuandoContaEstiverFechada() {
+        ContaConsumo conta = criarContaQuitada();
+        conta.fechar();
+
+        Pedido pedido = new Pedido("PED-002");
+        Produto agua = new Produto("Água", new BigDecimal("5.00"));
+        pedido.adicionarItem("ITEM-002", agua, 1);
+        pedido.confirmar();
+
+        assertThrows(IllegalStateException.class,
+                () -> conta.registrarPedido(pedido));
+    }
+
+    @Test
+    void deveRejeitarPagamentoQuandoContaEstiverFechada() {
+        ContaConsumo conta = criarContaQuitada();
+        conta.fechar();
+
+        assertThrows(IllegalStateException.class,
+                () -> conta.registrarPagamento(new BigDecimal("1.00")));
+    }
+
+    private ContaConsumo criarContaQuitada() {
+        ContaConsumo conta = criarContaComConsumo();
+        conta.registrarPagamento(new BigDecimal("10.00"));
+        conta.registrarPagamento(new BigDecimal("6.00"));
+        return conta;
     }
 }

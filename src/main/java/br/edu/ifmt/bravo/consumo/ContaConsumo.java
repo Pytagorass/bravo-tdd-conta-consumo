@@ -53,4 +53,11 @@ public class ContaConsumo {
         return calcularTotal().subtract(totalPago);
     }
 
+    public void fechar() {
+    }
+
+    public boolean isFechada() {
+        return false;
+    }
+
 }
