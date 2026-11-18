@@ -37,4 +37,21 @@ class ContaConsumoTest {
         pedido.adicionarItem("ITEM-001", suco, 2);
         return pedido;
     }
+
+    @Test
+    void devePreservarTotalQuandoRegistrarPedidoComIdentificadorDuplicado() {
+        ContaConsumo conta = new ContaConsumo("RES-001");
+        Pedido original = criarPedidoComItens();
+        original.confirmar();
+        conta.registrarPedido(original);
+
+        Pedido duplicado = criarPedidoComItens();
+        duplicado.alterarQuantidadeDoItem("ITEM-001", 3);
+        duplicado.confirmar();
+
+        assertThrows(IllegalArgumentException.class,
+                () -> conta.registrarPedido(duplicado));
+
+        assertEquals(new BigDecimal("16.00"), conta.calcularTotal());
+    }
 }
