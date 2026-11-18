@@ -13,6 +13,7 @@ public class Pedido {
     }
 
     public void adicionarItem(String idItem, Produto produto, int quantidade) {
+        validarPedidoEmEdicao();
         if (!produto.isAtivo()) {
             throw new IllegalArgumentException("O produto está desativado.");
         }
@@ -32,12 +33,14 @@ public class Pedido {
     }
 
     public void removerItem(String idItem) {
+        validarPedidoEmEdicao();
         if (itens.remove(idItem) == null) {
             throw new IllegalArgumentException("Item não encontrado no pedido.");
         }
     }
 
     public void alterarQuantidadeDoItem(String idItem, int quantidade) {
+        validarPedidoEmEdicao();
         ItemPedido item = itens.get(idItem);
 
         if (item == null) {
@@ -57,5 +60,11 @@ public class Pedido {
 
     public boolean isConfirmado() {
         return confirmado;
+    }
+
+    private void validarPedidoEmEdicao() {
+        if (confirmado) {
+            throw new IllegalStateException("Um pedido confirmado não pode ser alterado.");
+        }
     }
 }
