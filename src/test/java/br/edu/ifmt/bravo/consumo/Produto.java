@@ -8,5 +8,8 @@ public class Produto {
     }
 
     public void alterarPreco(BigDecimal novoPreco) {
+    if (novoPreco.signum() < 0) {
+        throw new IllegalArgumentException("O preço não pode ser negativo.");
+    }
     }
 }
